@@ -1,3 +1,16 @@
-h1 {
-  color: blue;
+html {
+  background-color: cadetblue;
+}
+
+body {
+  margin-top: 100px;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-bottom: 50px;
+}
+
+h1, h2, h3 {
+  font-family: "Trebuchet MS", Tahoma, Verdana, sans-serif;
+  font-weight: bold;
+  color: white;
 }
