@@ -1,0 +1,12 @@
+{
+  "identifier" : "E9ABE94B-8215-4686-BF40-140C032ACF6F",
+  "ignoredFilePatterns" : [
+    ".git",
+    ".nova"
+  ],
+  "localPath" : ".",
+  "remotePath" : "\/home\/kc0btp\/kc0btp.com",
+  "remoteURL" : "kc0btp.com",
+  "server" : "kc0btp.com",
+  "usesPublishing" : true
+}
