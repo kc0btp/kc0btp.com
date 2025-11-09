@@ -1,21 +1,21 @@
 html {
-  background-color: lightblue;
+  	background-color: lightblue;
 	color: darkcyan;
-	font-style: Georgia, serif;
+	font-family: "Trebuchet MS", Tahoma, Verdana, sans-serif;
 	line-height: 1.2;
 }
 
 body {
-  margin-top: 100px;
-  margin-left: 50px;
-  margin-right: 50px;
-  margin-bottom: 50px;
+  	margin-top: 100px;
+  	margin-left: 50px;
+  	margin-right: 50px;
+  	margin-bottom: 50px;
 }
 
 h1, h2, h3 {
-  font-family: "Trebuchet MS", Tahoma, Verdana, sans-serif;
-  font-weight: bold;
-  color: #a0615f;
+  	font-family: "Trebuchet MS", Tahoma, Verdana, sans-serif;
+  	font-weight: bold;
+  	color: #a0615f;
 }
 
 a {
@@ -40,7 +40,7 @@ a:active {
 }
 
 pre {
-		display: inline;
+	display: inline;
 }
 
 kbd {
