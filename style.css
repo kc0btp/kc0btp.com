@@ -1,5 +1,8 @@
 html {
-  background-color: cadetblue;
+  background-color: lightblue;
+	color: darkcyan;
+	font-style: Georgia, serif;
+	line-height: 1.2;
 }
 
 body {
@@ -12,5 +15,34 @@ body {
 h1, h2, h3 {
   font-family: "Trebuchet MS", Tahoma, Verdana, sans-serif;
   font-weight: bold;
-  color: white;
+  color: #a0615f;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:link {
+	color: #a0615f;
+}
+
+a:visited {
+	color: #a0615f;
+}
+
+a:hover {
+	color: #a0615f;
+	text-decoration: underline;
+}
+
+a:active {
+	color: crimson;
+}
+
+pre {
+		display: inline;
+}
+
+kbd {
+
 }

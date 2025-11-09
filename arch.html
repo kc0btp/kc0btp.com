@@ -1,99 +1,106 @@
 <!DOCTYPE html>
-<head>
-  <title>My Arch Linux Journey</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
 
-<body>
-  <h1>My Arch Linux Journey</h1>
+<html>
+	<head>
+		<title>The Arch Linux Journey</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
 
-  <p>
-    I started with the Arch Installation Guide, which is generally the best
-    resource to get through the installation.
-  </p>
-  <p></p>
+	<body>
+		<h1>My Arch Linux Journey</h1>
 
-  <h2>Setup</h2>
+		<p>
+			I started with the Arch Installation Guide, which is generally the best
+			resource to get through the installation.
+		</p>
+		<p></p>
 
-  <ol>
-    <li>Downloaded the <a href="https://archlinux.org/download/">Arch ISO</a>.</li>
-    <li>Created a bootable USB flash drive with Rufus on Windows.</li>
-    <li>Since my UEFI/BIOS wasn’t cooperating with an on-the-fly boot disk selection, I set boot priority in the BIOS to the flash drive first.</li>
-    <li>Pinged google.com to make sure the network was working (amazingly, it was).</li>
-    <li>Partitioned the dedicated drive, using fdisk /dev/the_disk_to_be_partitioned following the recommended scheme (see Table 1)</li>
-    <li>Formatted / and /boot with mkfs.ext4 /dev/root_partition.</li>
-    <li>Formatted swap with mkswap /dev/swap_partition.</li>
-    <li>Mounted the volumes, e.g. mount /dev/root_partition /mnt</li>
-    <li>Enabled swap, e.g. swapon /dev/swap_partition</li>
-  </ol>
+		<h2>Setup</h2>
 
-	<table>
-		<tr>
-			<th>Mount Point</th>
-			<th>Partition</th>
-			<th>Partition Type</th>
-			<th>Suggested Size</th>
-		</tr>
-		<tr>
-			<td>/boot</td>
-			<td>/dev/ efi_system_partition</td>
-			<td>EFI system partition</td>
-			<td>1 GiB</td>
-		</tr>
-		<tr>
-			<td>[SWAP]</td>
-			<td>/dev/swap_partition</td>
-			<td>Linux swap</td>
-			<td>At least 4 GiB</td>
-		</tr>
-		<tr>
-			<td>/</td>
-			<td>/dev/root_partition</td>
-			<td>Linux x86-64 root (/)</td>
-			<td>Remainder of the device. At least 23–32 GiB.</td>
-		</tr>
-	</table>
-
-	<p>My 2 TB drive was "sda", so I had:
-		<ul>
-			<li>/dev/sda1 as /boot (2 GB)</li>
-			<li>/dev/sda2 as swap (8GB)</li>
-			<li>/dev/sda3 as / (Remaining Space)</li>
-		</ul>
-	</p>
-
-  <h2>Installation</h2>
-
-	<ol start="10">
-  	<li>Installed base software with pacstrap: pacstrap -K /mnt base linux
-  linux-firmware nano amd-ucode fsck man-db man-info</li>
-		<ul>
-			<li>I ended up trying to install several other packages that were either not available or for which I had the wrong name. For example Network Manager is “networkmanager”, but I didn’t know that (I ended up installing it later).</li>
-			<li>pacstrap can be invoked any time you’re booted off the live install system to install additional hardware to your root volume.</li>
-		</ul>
-		<li>I went through the config steps, but I think I forgot to generate the fstab or I did something wrong. I’ll mention this later.</li>
-		<li>Installed GRUB as a boot loader: grub-install --target=x86_64-efi --efi-directory=esp --bootloader-id=GRUB. I read it doesn’t play nicely with Windows (and in fact, it doesn’t recognize my Windows disk for some reasonyet), but I’ve used it before.</li>
-	</ol>
-
-	<h2>Launch</h2>
-
-	<ol start="13">
-		<li>At this point, I rebooted, but because I didn’t set up GRUB to use secure boot, I had to disable it in the UEFI/BIOS. The good news is that Arch booted successfully. There were two bits of bad news:</li>
 		<ol>
-			<li>The boot seemed unusually slow.</li>
-			<li>I couldn’t connect to the internet.</li>
+			<li>Downloaded the <a href="https://archlinux.org/download/">Arch ISO</a>.</li>
+			<li>Created a bootable USB flash drive with Rufus on Windows.</li>
+			<li>Since my UEFI/BIOS wasn&apos;t cooperating with an on-the-fly boot disk selection, I set boot priority in the BIOS to the flash drive first.</li>
+			<li>Pinged <a href="https://www.google.com">google.com</a> to make sure the network was working (amazingly, it was).</li>
+			<li>Partitioned the dedicated drive, using <kbd>fdisk /dev/the_disk_to_be_partitioned</kbd> following the recommended scheme (see Table 1).</li>
+			<li>Formatted <pre>/</pre> and <pre>/boot</pre> with <kbd>mkfs.ext4 /dev/partition_name</kbd>.</li>
+			<li>Formatted swap with <kbd>mkswap /dev/swap_partition</kbd>.</li>
+			<li>Mounted the volumes, e.g. <kbd>mount /dev/root_partition /mnt</kbd>.</li>
+			<li>Enabled swap, e.g. <kbd>swapon /dev/swap_partition</kbd>.</li>
 		</ol>
-		<li>First to tackle the internet issue because I wouldn’t be able to install anything with pacman otherwise (aside from using pacstrap). Fortunately, I found this: https://linuxvox.com/blog/arch-linux-network-ip/. I booted off USB, installed networkmanager with pacstrap, and then the network config was trivial:</li>
-		<ul>
-			<li>sudo systemctl start NetworkManager</li>
-			<li>sudo systemctl enable NetworkManager*</li>
-		</ul>
-  	<li>Next, I installed zsh, and found this nice little guide to set the default shell and install PowerLevel10k: https://davidtsadler.com/posts/arch/2020-09-07/installing-zsh-and-powerlevel10k-on-arch-linux/</li>
-  	<li>I was also interested in dwm from suckless.org after watching a lot of Bread on Penguins, and followed another guide from the same author to get it, dmenu, and st installed: https://davidtsadler.com/posts/arch/2020-08-17/installing-st-dmenu-dwm-in-arch-linux/</li>
-  	<li>Next, I tackled the slow boot issue. Arch is configured to quiet boot by default so I had no idea what might be happening. Fortunately, I found this useful thread: https://bbs.archlinux.org/viewtopic.php?id=308506. My problem was exactly the same as the OP’s, so fixing the swap partition’s UUID in the fstab was the key. This is why I’m not sure whether I configured this properly during installation. 18. After that, I installed qutebrowser, again following the lead of Bread on Penguins. 19. Set up dual monitors using xrandr: xrandr --output DP-1 --primary --auto --output DP-3 --auto --right-of DP-1</li>
-	</ol>
 
-	<p>*Note: to be fair, I did try editing some network config files prior to this following some instructions on a site I didn’t keep notes on so I can’t reference it here. It’s possible something I did there helped, but nothing worked until I got NetworkManager installed and enabled.</p>
+		<table>
+			<tr>
+				<th>Mount Point</th>
+				<th>Partition</th>
+				<th>Partition Type</th>
+				<th>Suggested Size</th>
+			</tr>
+			<tr>
+				<td><pre>/boot</pre></td>
+				<td><pre>/dev/efi_system_partition</pre></td>
+				<td>EFI system partition</td>
+				<td>1 GiB</td>
+			</tr>
+			<tr>
+				<td>[SWAP]</td>
+				<td><pre>/dev/swap_partition</pre></td>
+				<td>Linux swap</td>
+				<td>At least 4 GiB</td>
+			</tr>
+			<tr>
+				<td><pre>/</pre></td>
+				<td><pre>/dev/root_partition</pre></td>
+				<td>Linux x86-64 root (/)</td>
+				<td>Remainder of the device. At least 23&ndash;32 GiB.</td>
+			</tr>
+		</table>
 
-  <a href="/">&lt; Home</a>
-</body>
+		<p>My drive was called &ldquo;sda&rdquo;, so I used:
+			<ul>
+				<li><pre>/dev/sda1</pre> as <pre>/boot</pre> (2 GB)</li>
+				<li><pre>/dev/sda2</pre> as <pre>swap</pre> (8GB)</li>
+				<li><pre>/dev/sda3</pre> as <pre>/</pre> (Remaining Space)</li>
+			</ul>
+		</p>
+
+		<h2>Installation</h2>
+
+		<ol start="10">
+			<li>Installed base software with pacstrap: <kbd>pacstrap -K /mnt base linux
+		linux-firmware nano amd-ucode fsck man-db man-info</kbd></li>
+			<ul>
+				<li>I ended up trying to install several other packages that were either not available or for which I had the wrong name. For example Network Manager is &ldquo;networkmanager&rdquo;, but I didn&rsquo;t know that (I ended up installing it later).</li>
+				<li>pacstrap can be invoked any time you&apos;re booted off the live install system to install additional hardware to your root volume.</li>
+			</ul>
+			<li>I went through the config steps, but I think I forgot to generate the <pre>fstab</pre> or I did something wrong. I&apos;ll mention this later.</li>
+			<li>Installed GRUB as a boot loader: <kbd>grub-install --target=x86_64-efi --efi-directory=esp --bootloader-id=GRUB</kbd>. I read it doesn&apos;t play nicely with Windows (and in fact, it doesn’t recognize my Windows disk for some reason yet), but I’ve used it before so decided to use it again.</li>
+		</ol>
+
+		<h2>Launch</h2>
+
+		<ol start="13">
+			<li>At this point, I rebooted, but because I didn&apos;t set up GRUB to use secure boot, I had to disable it in the UEFI/BIOS. The good news is that Arch booted successfully. There were two bits of bad news:</li>
+			<ol>
+				<li>The boot seemed unusually slow.</li>
+				<li>I couldn&rsquo;t connect to the internet.</li>
+			</ol>
+			<li>First to tackle the internet issue because I wouldn&apos;t be able to install anything with pacman otherwise (aside from using pacstrap). Fortunately, I found this: <a href="https://linuxvox.com/blog/arch-linux-network-ip/">https://linuxvox.com/blog/arch-linux-network-ip/</a>. I booted off USB, installed networkmanager with pacstrap, and then the network config was trivial:</li>
+			<ul>
+				<li><kbd>sudo systemctl start NetworkManager</kbd></li>
+				<li><kbd>sudo systemctl enable NetworkManager</kbd>&dagger;</li>
+			</ul>
+			<li>Next, I installed zsh, and found this nice little guide to set the default shell and install PowerLevel10k: <a href="https://davidtsadler.com/posts/arch/2020-09-07/installing-zsh-and-powerlevel10k-on-arch-linux/">https://davidtsadler.com/posts/arch/2020-09-07/installing-zsh-and-powerlevel10k-on-arch-linux/</a>.</li>
+			<li>I was also interested in <a href="https://dwm.suckless.org">dwm</a> from <a href="suckless.org">suckless.org</a> after watching a lot of <a href="https://www.youtube.com/@BreadOnPenguins">Bread on Penguins</a>, and followed another guide from the same author to get it, <a href="https://tools.suckless.org/dmenu/">dmenu<a/>, and <a href="https://st.suckless.org">st</a> installed: <a href="https://davidtsadler.com/posts/arch/2020-08-17/installing-st-dmenu-dwm-in-arch-linux/">https://davidtsadler.com/posts/arch/2020-08-17/installing-st-dmenu-dwm-in-arch-linux/</a>.</li>
+			<li>Next, I tackled the slow boot issue. Arch is configured to quiet boot by default so I had no idea what might be happening. Fortunately, I found this useful thread: <a href="https://bbs.archlinux.org/viewtopic.php?id=308506">https://bbs.archlinux.org/viewtopic.php?id=308506</a>. My problem was exactly the same as the OP&apos;s, so fixing the swap partition&apos;s UUID in the <pre>fstab</pre> was the key. This is why I&apos;m not sure whether I configured this properly during installation.</li>
+			<li>After that, I installed qutebrowser, again following the lead of Bread on Penguins.</li>
+			<li>Set up dual monitors using xrandr: <kbd>xrandr --output DP-1 --primary --auto --output DP-3 --auto --right-of DP-1</kbd>.</li>
+		</ol>
+
+		<p>&dagger;Note: to be fair, I did try editing some network config files prior to this following some instructions on a site I didn&apos;t keep notes on so I can&apos;t reference it here. It&apos;s possible something I did there helped, but nothing worked until I got NetworkManager installed and enabled.</p>
+
+		<p>More to come...</p>
+
+		<a href="/">&lt; Home</a>
+	</body>
+</html>
