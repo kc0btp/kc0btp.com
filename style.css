@@ -46,3 +46,8 @@ pre {
 kbd {
 
 }
+
+th {
+	font-family: "Trebuchet MS", Tahoma, Verdana, sans-serif;
+	text-align: left;
+}
