@@ -104,13 +104,14 @@
 					<li>The boot seemed unusually slow.</li>
 					<li>I couldn&rsquo;t connect to the internet.</li>
 				</ol>
-				<li>First to tackle the internet issue because I wouldn&apos;t be able to install anything with pacman otherwise (aside from using pacstrap). Fortunately, I found this: <a href="https://linuxvox.com/blog/arch-linux-network-ip/">https://linuxvox.com/blog/arch-linux-network-ip/</a>. I booted off USB, installed networkmanager with pacstrap, and then the network config was trivial:</li>
-				<ul>
-					<li><kbd>sudo systemctl start NetworkManager</kbd></li>
-					<li><kbd>sudo systemctl enable NetworkManager</kbd>&dagger;</li>
-				</ul>
+				<li>First to tackle the internet issue because I wouldn&apos;t be able to install anything with pacman otherwise (aside from using pacstrap). Fortunately, I found this: <a href="https://linuxvox.com/blog/arch-linux-network-ip/">https://linuxvox.com/blog/arch-linux-network-ip/</a>. I booted off USB, installed networkmanager with pacstrap, and then the network config was trivial:
+					<ul>
+						<li><kbd>sudo systemctl start NetworkManager</kbd></li>
+						<li><kbd>sudo systemctl enable NetworkManager</kbd>&dagger;</li>
+					</ul>
+				</li>
 				<li>Next, I installed zsh, and found this nice little guide to set the default shell and install PowerLevel10k: <a href="https://davidtsadler.com/posts/arch/2020-09-07/installing-zsh-and-powerlevel10k-on-arch-linux/">https://davidtsadler.com/posts/arch/2020-09-07/installing-zsh-and-powerlevel10k-on-arch-linux/</a>.</li>
-				<li>I was also interested in <a href="https://dwm.suckless.org">dwm</a> from <a href="suckless.org">suckless.org</a> after watching a lot of <a href="https://www.youtube.com/@BreadOnPenguins">Bread on Penguins</a>, and followed another guide from the same author to get it, <a href="https://tools.suckless.org/dmenu/">dmenu<a/>, and <a href="https://st.suckless.org">st</a> installed: <a href="https://davidtsadler.com/posts/arch/2020-08-17/installing-st-dmenu-dwm-in-arch-linux/">https://davidtsadler.com/posts/arch/2020-08-17/installing-st-dmenu-dwm-in-arch-linux/</a>.</li>
+				<li>I was also interested in <a href="https://dwm.suckless.org">dwm</a> from <a href="suckless.org">suckless.org</a> after watching a lot of <a href="https://www.youtube.com/@BreadOnPenguins">Bread on Penguins</a>, and followed another guide from the same author to get it, <a href="https://tools.suckless.org/dmenu/">dmenu</a>, and <a href="https://st.suckless.org">st</a> installed: <a href="https://davidtsadler.com/posts/arch/2020-08-17/installing-st-dmenu-dwm-in-arch-linux/">https://davidtsadler.com/posts/arch/2020-08-17/installing-st-dmenu-dwm-in-arch-linux/</a>.</li>
 				<li>Next, I tackled the slow boot issue. Arch is configured to quiet boot by default so I had no idea what might be happening. Fortunately, I found this useful thread: <a href="https://bbs.archlinux.org/viewtopic.php?id=308506">https://bbs.archlinux.org/viewtopic.php?id=308506</a>. My problem was exactly the same as the OP&apos;s, so fixing the swap partition&apos;s UUID in the <pre>fstab</pre> was the key. This is why I&apos;m not sure whether I configured this properly during installation.</li>
 				<li>After that, I installed qutebrowser, again following the lead of Bread on Penguins.</li>
 				<li>Set up dual monitors using xrandr: <kbd>xrandr --output DP-1 --primary --auto --output DP-3 --auto --right-of DP-1</kbd>.</li>
