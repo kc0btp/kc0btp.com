@@ -16,6 +16,10 @@ h1, h2, h3 {
   	color: #a0615f;
 }
 
+p.note {
+	font-size: 0.8em;
+}
+
 a {
 	text-decoration: none;
 }
