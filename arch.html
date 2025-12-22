@@ -113,10 +113,16 @@
 				<li>Next, I installed zsh, and found this nice little guide to set the default shell and install PowerLevel10k: <a href="https://davidtsadler.com/posts/arch/2020-09-07/installing-zsh-and-powerlevel10k-on-arch-linux/">https://davidtsadler.com/posts/arch/2020-09-07/installing-zsh-and-powerlevel10k-on-arch-linux/</a>.</li>
 				<li>I was also interested in <a href="https://dwm.suckless.org">dwm</a> from <a href="suckless.org">suckless.org</a> after watching a lot of <a href="https://www.youtube.com/@BreadOnPenguins">Bread on Penguins</a>, and followed another guide from the same author to get it, <a href="https://tools.suckless.org/dmenu/">dmenu</a>, and <a href="https://st.suckless.org">st</a> installed: <a href="https://davidtsadler.com/posts/arch/2020-08-17/installing-st-dmenu-dwm-in-arch-linux/">https://davidtsadler.com/posts/arch/2020-08-17/installing-st-dmenu-dwm-in-arch-linux/</a>.</li>
 				<li>Next, I tackled the slow boot issue. Arch is configured to quiet boot by default so I had no idea what might be happening. Fortunately, I found this useful thread: <a href="https://bbs.archlinux.org/viewtopic.php?id=308506">https://bbs.archlinux.org/viewtopic.php?id=308506</a>. My problem was exactly the same as the OP&apos;s, so fixing the swap partition&apos;s UUID in the <pre>fstab</pre> was the key. This is why I&apos;m not sure whether I configured this properly during installation.</li>
-				<li>After that, I installed <a href="https://qutebrowser.org">qutebrowser</a>, again following the lead of Bread on Penguins.</li>
+			</ol>
+
+			<h2>Tailoring</h2>
+
+			<ol start="18">
+				<li>I installed <a href="https://qutebrowser.org">qutebrowser</a>, again following the lead of Bread on Penguins.</li>
 				<li>Set up dual monitors using xrandr: <kbd>xrandr --output DP-1 --primary --auto --output DP-3 --auto --right-of DP-1</kbd>.</li>
-				<li>Installed <a href="http://librewolf.net">LibreWolf</a> for general browsing. It's a little easier for me to navigate for now instead of qutebrowser.</li>
+				<li>Decided to install <a href="http://librewolf.net">LibreWolf</a> for general browsing. It's a little easier for me to navigate for now instead of qutebrowser.</li>
 				<li>Installed <a href="https://www.passwordstore.com">pass</a> as a command line password manager, which required me to generate GPG keys. I'm not sure whether I'll stick with this long term, but it'll at least allow me to easily keep a few passwords handy for now and copy them to the clipboard for use.</li>
+				<li>Patched dwm successfully with the <a href="https://dwm.suckless.org/patches/functionalgaps/">functionalgaps</a> patch to improve the aesthetics of the tiled windows. This was my first time applying a .diff file, and is as simple as downloading the <pre>.diff</pre> file and running <kbd>patch < path/to/patch-file.diff</kbd> in the dwm folder. After that, a <kbd>sudo make clean install</kbd> failed because I discovered suckless patches wisely update the <pre>config.def.h</pre> file instead of the user-edited <pre>config.h</pre> file, so my config didn't contain some necessary definitions from the patch. Fortunately, I haven't don't any customization, so I was able to copy the default on top of my config and then built successfully.</li>
 			</ol>
 
 			<p class="note">&dagger;Note: to be fair, I did try editing some network config files prior to this following some instructions on a site I didn&apos;t keep notes on so I can&apos;t reference it here. It&apos;s possible something I did there helped, but nothing worked until I got NetworkManager installed and enabled.</p>
