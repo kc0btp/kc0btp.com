@@ -123,11 +123,14 @@
 				<li>Decided to install <a href="http://librewolf.net">LibreWolf</a> for general browsing. It's a little easier for me to navigate for now instead of qutebrowser.</li>
 				<li>Installed <a href="https://www.passwordstore.com">pass</a> as a command line password manager, which required me to generate GPG keys. I'm not sure whether I'll stick with this long term, but it'll at least allow me to easily keep a few passwords handy for now and copy them to the clipboard for use.</li>
 				<li>Patched dwm successfully with the <a href="https://dwm.suckless.org/patches/functionalgaps/">functionalgaps</a> patch to improve the aesthetics of the tiled windows. This was my first time applying a .diff file, and is as simple as downloading the <pre>.diff</pre> file and running <kbd>patch < path/to/patch-file.diff</kbd> in the dwm folder. After that, a <kbd>sudo make clean install</kbd> failed because I discovered suckless patches wisely update the <pre>config.def.h</pre> file instead of the user-edited <pre>config.h</pre> file, so my config didn't contain some necessary definitions from the patch. Fortunately, I haven't don't any customization, so I was able to copy the default on top of my config and then built successfully.</li>
+				<li>I had installed <a href="https://wiki.archlinux.org/title/Feh">feh</a> a while ago but hadn't tried using it to set the background (though I did snag a few background images at some point). It turns out, it's pretty trivial: <kbd>feh --bg-fill /path/to/image</kbd> and it set the background on both monitors. It's possible to set the monitors independently, but I like the same image on both monitors. The next challenge was to get the background to persist, which required me to create a <pre>.fehbg</pre> file in my home directory with essentially that same command and include a line in my <pre>.xinitrc</pre> to call it when starting up Xorg. It didn't work initially, but I eventually figured out that I needed to have the call to run my window manager <i>last</i> in the <pre>.xinitrc</pre> file for it to work properly.</li>
+				<li>With the background set, I wanted to play with <a href="https://github.com/eylles/pywal16">pywall</a> to set some system colors. This also works pretty easily, though to get this working system-wide is going to take more work. A simple <kbd>wal -i /path/to/image</kbd> will at least set the terminal colors to a palette that matches the background. I tried some simple scripting to get the background set with a selection menu and then set the colors with <pre>wal</pre>, but I'm only partially successful. I'll have to get back to it later.
 			</ol>
+
+			<p>More to come...</p>
 
 			<p class="note">&dagger;Note: to be fair, I did try editing some network config files prior to this following some instructions on a site I didn&apos;t keep notes on so I can&apos;t reference it here. It&apos;s possible something I did there helped, but nothing worked until I got NetworkManager installed and enabled.</p>
 
-			<p>More to come...</p>
 		</div>
 		<div id="footer">
 			Copyright &copy;2025, kc0btp.com
