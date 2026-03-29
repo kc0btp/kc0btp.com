@@ -115,7 +115,7 @@
 				<li>Next, I tackled the slow boot issue. Arch is configured to quiet boot by default so I had no idea what might be happening. Fortunately, I found this useful thread: <a href="https://bbs.archlinux.org/viewtopic.php?id=308506">https://bbs.archlinux.org/viewtopic.php?id=308506</a>. My problem was exactly the same as the OP&apos;s, so fixing the swap partition&apos;s UUID in the <pre>fstab</pre> was the key. This is why I&apos;m not sure whether I configured this properly during installation.</li>
 			</ol>
 
-			<h2>Tailoring</h2>
+			<h2>Tailoring: Attempt One</h2>
 
 			<ol start="18">
 				<li>I installed <a href="https://qutebrowser.org">qutebrowser</a>, again following the lead of Bread on Penguins.</li>
@@ -128,7 +128,29 @@
 				<li>At some point along the way, I didn't fully set my locale so I would see errors stating my locale was not supported after running some commands. Checking <kbd>locale</kbd> showed I was missing some things like <pre>LC_TYPE</pre> and <pre>LC_ALL</pre>. I dug around and found the <pre>/etc/locale.gen</pre> file (after reading through some forums), edited it to uncomment the line for en_US.UTF-8, and then ran <kbd>locale-gen</kbd> to regenerate my locales. All is good now...just not entirely clear why this was necessary in the first place.</li>
 				<li>I just realized today that at some point I had installed yay. I'll have to make a note about that, because it's compiled from source.</li>
 				<li>Grabbed the <a href="https://gist.github.com/erlendaakre/12eb90eef84a3ab81f7b531e516c9594">Dwm default keys cheat sheet gist</a> and created an alias in .zshrc to quickly display the cheat sheet in the terminal.</li>
+				<li>I set up <a href="https://github.com/sharkdp/bat">bat</a> to colorize several things like man pages.</li>
 			</ol>
+
+			<h2>Tailoring: Attempt Two</h2>
+
+			<p>I was browsing <a href="https://www.youtube.com">YouTube</a> the other day, and I ran across this interesting video by <a href="https://www.youtube.com/@joseanmartinez">Josean Martinez</a>: <a href="https://www.youtube.com/watch?v=uOnL4fEnldA&t=768s">How To Make Your Boring macOS Terminal Amazing With Alacritty</a>. I've been using <a href="https://iterm2.com">iTerm 2</a> for years and never saw much reason to use anything else, but I decided to check out <a href="https://alacritty.org/index.html">Alacritty</a> and see what Josean had to say.</p>
+
+			<p>The good news is that I learned a lot:</p>
+
+			<ul>
+				<li>How to use <a href="https://github.com/junegunn/fzf">fzf</a></li>
+				<li>Replacing ls with <a href="https://github.com/eza-community/eza">eza</a></li>
+				<li>The convenience of <a href="https://github.com/ajeetdsouza/zoxide">zoxide</a></li>
+				<li>A few other fun <a href="https://www.zsh.org/">zsh</a> tricks (my preferred shell)</li>
+			</ul>
+
+			<p>After watching Josean fly around in his TUI interfaces using a split keyboard, I realized I was probably chasing the idea of being some kind of 1337 DevOps pro instead of being realistic. The whole reason I started playing with Arch was to learn and get comfortable with Linux, which doesn't mean exclusively using the keyboard and becoming a <a href="https://neovim.io">neovim</a> wizard. Especially since I never learned to touch-type.</p>
+
+			<p>So, after farting around some more with dwm and dmenu, getting completely frustrated trying to remember which keys to press to do simple things like close windows and navigate the tiling window manager, I did a little research and settled on switching to <a href="https://hypr.land/">Hyprland</a>. That may bring an eye roll or two, but I wanted to try out something that used <a href="https://wayland.freedesktop.org">Wayland</a> and something that would be easier for me to configure and use. Hyprland fit the bill nicely.</p>
+
+			<p>Along the way, I set up my shell environment with many of the recommendations made by Josean, installed a few apps like Visual Studio Code and Firefox, and changed a couple of Hyprland keybindings to something more familiar (e.g. I made the launcher open with <kbd>alt-space</kbd> since I'm so used to <kbd>cmd-space</kbd> for Spotlight on macOS). I even managed to compile a handful of apps for amateur radio: <a href="https://wsjt.sourceforge.io/"wsjt-x</a>, <a href="https://www.w1hkj.org">fldigi</a>, and <a href="https://www.sdrpp.org/">SDR++</a>. I've also been playing around with some other terminal emulators like <a href="https://sw.kovidgoyal.net/kitty/">kitty</a> and <a href=https://ghostty.org">ghostty</a>.</p>
+
+			<p>Anyway, now I'm in business. I have a Linux machine I can actually use for something... exciting times!</p>
 
 			<p>More to come...</p>
 
