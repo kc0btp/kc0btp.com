@@ -43,6 +43,7 @@ a:active {
 
 pre {
 	display: inline;
+	margin: 0;
 }
 
 kbd {
