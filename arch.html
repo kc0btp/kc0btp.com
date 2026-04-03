@@ -42,7 +42,7 @@
 				<li>Since my UEFI/BIOS wasn&apos;t cooperating with an on-the-fly boot disk selection, I set boot priority in the BIOS to the flash drive first.</li>
 				<li>Pinged <a href="https://www.google.com">google.com</a> to make sure the network was working (amazingly, it was).</li>
 				<li>Partitioned the dedicated drive, using <kbd>fdisk /dev/the_disk_to_be_partitioned</kbd> following the recommended scheme (see Table 1).</li>
-				<li>Formatted <pre>/</pre> and <pre>/boot</pre> with <kbd>mkfs.ext4 /dev/partition_name</kbd>.</li>
+				<li>Formatted <code>/</code> and <code>/boot</code> with <kbd>mkfs.ext4 /dev/partition_name</kbd>.</li>
 				<li>Formatted swap with <kbd>mkswap /dev/swap_partition</kbd>.</li>
 				<li>Mounted the volumes, e.g. <kbd>mount /dev/root_partition /mnt</kbd>.</li>
 				<li>Enabled swap, e.g. <kbd>swapon /dev/swap_partition</kbd>.</li>
@@ -56,32 +56,31 @@
 					<th>Suggested Size</th>
 				</tr>
 				<tr>
-					<td><pre>/boot</pre></td>
-					<td><pre>/dev/efi_system_partition</pre></td>
+					<td><code>/boot</code></td>
+					<td><code>/dev/efi_system_partition</code></td>
 					<td>EFI system partition</td>
 					<td>1 GiB</td>
 				</tr>
 				<tr>
 					<td>[SWAP]</td>
-					<td><pre>/dev/swap_partition</pre></td>
+					<td><code>/dev/swap_partition</code></td>
 					<td>Linux swap</td>
 					<td>At least 4 GiB</td>
 				</tr>
 				<tr>
-					<td><pre>/</pre></td>
-					<td><pre>/dev/root_partition</pre></td>
+					<td><code>/</code></td>
+					<td><code>/dev/root_partition</code></td>
 					<td>Linux x86-64 root (/)</td>
 					<td>Remainder of the device. At least 23&ndash;32 GiB.</td>
 				</tr>
 			</table>
 
-			<p>My drive was called &ldquo;sda&rdquo;, so I used:
+			<p>My drive was called &ldquo;sda&rdquo;, so I used:</p>
 				<ul>
-					<li><pre>/dev/sda1</pre> as <pre>/boot</pre> (2 GB)</li>
-					<li><pre>/dev/sda2</pre> as <pre>swap</pre> (8GB)</li>
-					<li><pre>/dev/sda3</pre> as <pre>/</pre> (Remaining Space)</li>
+					<li><code>/dev/sda1</code> as <code>/boot</code> (2 GB)</li>
+					<li><code>/dev/sda2</code> as <code>swap</code> (8GB)</li>
+					<li><code>/dev/sda3</code> as <code>/</code> (Remaining Space)</li>
 				</ul>
-			</p>
 
 			<h2>Installation</h2>
 
@@ -92,7 +91,7 @@
 					<li>I ended up trying to install several other packages that were either not available or for which I had the wrong name. For example Network Manager is &ldquo;networkmanager&rdquo;, but I didn&rsquo;t know that (I ended up installing it later).</li>
 					<li>pacstrap can be invoked any time you&apos;re booted off the live install system to install additional hardware to your root volume.</li>
 				</ul>
-				<li>I went through the config steps, but I think I forgot to generate the <pre>fstab</pre> or I did something wrong. I&apos;ll mention this later.</li>
+				<li>I went through the config steps, but I think I forgot to generate the <code>fstab</code> or I did something wrong. I&apos;ll mention this later.</li>
 				<li>Installed GRUB as a boot loader: <kbd>grub-install --target=x86_64-efi --efi-directory=esp --bootloader-id=GRUB</kbd>. I read it doesn&apos;t play nicely with Windows (and in fact, it doesn&apos;t recognize my Windows disk for some reason yet), but I&apos;ve used it before so decided to use it again.</li>
 			</ol>
 
@@ -112,7 +111,7 @@
 				</li>
 				<li>Next, I installed zsh, and found this nice little guide to set the default shell and install PowerLevel10k: <a href="https://davidtsadler.com/posts/arch/2020-09-07/installing-zsh-and-powerlevel10k-on-arch-linux/">https://davidtsadler.com/posts/arch/2020-09-07/installing-zsh-and-powerlevel10k-on-arch-linux/</a>.</li>
 				<li>I was also interested in <a href="https://dwm.suckless.org">dwm</a> from <a href="suckless.org">suckless.org</a> after watching a lot of <a href="https://www.youtube.com/@BreadOnPenguins">Bread on Penguins</a>, and followed another guide from the same author to get it, <a href="https://tools.suckless.org/dmenu/">dmenu</a>, and <a href="https://st.suckless.org">st</a> installed: <a href="https://davidtsadler.com/posts/arch/2020-08-17/installing-st-dmenu-dwm-in-arch-linux/">https://davidtsadler.com/posts/arch/2020-08-17/installing-st-dmenu-dwm-in-arch-linux/</a>.</li>
-				<li>Next, I tackled the slow boot issue. Arch is configured to quiet boot by default so I had no idea what might be happening. Fortunately, I found this useful thread: <a href="https://bbs.archlinux.org/viewtopic.php?id=308506">https://bbs.archlinux.org/viewtopic.php?id=308506</a>. My problem was exactly the same as the OP&apos;s, so fixing the swap partition&apos;s UUID in the <pre>fstab</pre> was the key. This is why I&apos;m not sure whether I configured this properly during installation.</li>
+				<li>Next, I tackled the slow boot issue. Arch is configured to quiet boot by default so I had no idea what might be happening. Fortunately, I found this useful thread: <a href="https://bbs.archlinux.org/viewtopic.php?id=308506">https://bbs.archlinux.org/viewtopic.php?id=308506</a>. My problem was exactly the same as the OP&apos;s, so fixing the swap partition&apos;s UUID in the <code>fstab</code> was the key. This is why I&apos;m not sure whether I configured this properly during installation.</li>
 			</ol>
 
 			<p class="note">&dagger;Note: to be fair, I did try editing some network config files prior to this following some instructions on a site I didn&apos;t keep notes on so I can&apos;t reference it here. It&apos;s possible something I did there helped, but nothing worked until I got NetworkManager installed and enabled.</p>
@@ -124,10 +123,10 @@
 				<li>Set up dual monitors using xrandr: <kbd>xrandr --output DP-1 --primary --auto --output DP-3 --auto --right-of DP-1</kbd>.</li>
 				<li>Decided to install <a href="http://librewolf.net">LibreWolf</a> for general browsing. It&apos;s a little easier for me to navigate for now instead of qutebrowser.</li>
 				<li>Installed <a href="https://www.passwordstore.com">pass</a> as a command line password manager, which required me to generate GPG keys. I&apos;m not sure whether I&apos;ll stick with this long term, but it&apos;ll at least allow me to easily keep a few passwords handy for now and copy them to the clipboard for use.</li>
-				<li>Patched dwm successfully with the <a href="https://dwm.suckless.org/patches/functionalgaps/">functionalgaps</a> patch to improve the aesthetics of the tiled windows. This was my first time applying a .diff file, and is as simple as downloading the <pre>.diff</pre> file and running <kbd>patch < path/to/patch-file.diff</kbd> in the dwm folder. After that, a <kbd>sudo make clean install</kbd> failed because I discovered suckless patches wisely update the <pre>config.def.h</pre> file instead of the user-edited <pre>config.h</pre> file, so my config didn&apos;t contain some necessary definitions from the patch. Fortunately, I haven&apos;t done any customization, so I was able to copy the default on top of my config and then built successfully.</li>
-				<li>I had installed <a href="https://wiki.archlinux.org/title/Feh">feh</a> a while ago but hadn&apos;t tried using it to set the background (though I did snag a few background images at some point). It turns out, it&apos;s pretty trivial: <kbd>feh --bg-fill /path/to/image</kbd> and it set the background on both monitors. It&apos;s possible to set the monitors independently, but I like the same image on both monitors. The next challenge was to get the background to persist, which required me to create a <pre>.fehbg</pre> file in my home directory with essentially that same command and include a line in my <pre>.xinitrc</pre> to call it when starting up Xorg. It didn&apos;t work initially, but I eventually figured out that I needed to have the call to run my window manager <i>last</i> in the <pre>.xinitrc</pre> file for it to work properly.</li>
-				<li>With the background set, I wanted to play with <a href="https://github.com/eylles/pywal16">pywall</a> to set some system colors. This also works pretty easily, though to get this working system-wide is going to take more work. A simple <kbd>wal -i /path/to/image</kbd> will at least set the terminal colors to a palette that matches the background. I tried some simple scripting to get the background set with a selection menu and then set the colors with <pre>wal</pre>, but I&apos;m only partially successful. I&apos;ll have to get back to it later. UPDATE: I realized that pywal will use feh if it&apos;s installed, so I don&apos;t need to use feh separately&emdash;just make the call to <pre>wal</pre> and feed it the file, and it sets the background and terminal colors. I just need to figure out the best way to make it persist.</li>
-				<li>At some point along the way, I didn&apos;t fully set my locale so I would see errors stating my locale was not supported after running some commands. Checking <kbd>locale</kbd> showed I was missing some things like <pre>LC_TYPE</pre> and <pre>LC_ALL</pre>. I dug around and found the <pre>/etc/locale.gen</pre> file (after reading through some forums), edited it to uncomment the line for en_US.UTF-8, and then ran <kbd>locale-gen</kbd> to regenerate my locales. All is good now...just not entirely clear why this was necessary in the first place.</li>
+				<li>Patched dwm successfully with the <a href="https://dwm.suckless.org/patches/functionalgaps/">functionalgaps</a> patch to improve the aesthetics of the tiled windows. This was my first time applying a .diff file, and is as simple as downloading the <code>.diff</code> file and running <kbd>patch &lt; path/to/patch-file.diff</kbd> in the dwm folder. After that, a <kbd>sudo make clean install</kbd> failed because I discovered suckless patches wisely update the <code>config.def.h</code> file instead of the user-edited <code>config.h</code> file, so my config didn&apos;t contain some necessary definitions from the patch. Fortunately, I haven&apos;t done any customization, so I was able to copy the default on top of my config and then built successfully.</li>
+				<li>I had installed <a href="https://wiki.archlinux.org/title/Feh">feh</a> a while ago but hadn&apos;t tried using it to set the background (though I did snag a few background images at some point). It turns out, it&apos;s pretty trivial: <kbd>feh --bg-fill /path/to/image</kbd> and it set the background on both monitors. It&apos;s possible to set the monitors independently, but I like the same image on both monitors. The next challenge was to get the background to persist, which required me to create a <code>.fehbg</code> file in my home directory with essentially that same command and include a line in my <code>.xinitrc</code> to call it when starting up Xorg. It didn&apos;t work initially, but I eventually figured out that I needed to have the call to run my window manager <i>last</i> in the <code>.xinitrc</code> file for it to work properly.</li>
+				<li>With the background set, I wanted to play with <a href="https://github.com/eylles/pywal16">pywall</a> to set some system colors. This also works pretty easily, though to get this working system-wide is going to take more work. A simple <kbd>wal -i /path/to/image</kbd> will at least set the terminal colors to a palette that matches the background. I tried some simple scripting to get the background set with a selection menu and then set the colors with <code>wal</code>, but I&apos;m only partially successful. I&apos;ll have to get back to it later. UPDATE: I realized that pywal will use feh if it&apos;s installed, so I don&apos;t need to use feh separately&emdash;just make the call to <code>wal</code> and feed it the file, and it sets the background and terminal colors. I just need to figure out the best way to make it persist.</li>
+				<li>At some point along the way, I didn&apos;t fully set my locale so I would see errors stating my locale was not supported after running some commands. Checking <kbd>locale</kbd> showed I was missing some things like <code>LC_TYPE</code> and <code>LC_ALL</code>. I dug around and found the <code>/etc/locale.gen</code> file (after reading through some forums), edited it to uncomment the line for en_US.UTF-8, and then ran <kbd>locale-gen</kbd> to regenerate my locales. All is good now...just not entirely clear why this was necessary in the first place.</li>
 				<li>I just realized today that at some point I had installed yay. I&apos;ll have to make a note about that, because it&apos;s compiled from source.</li>
 				<li>Grabbed the <a href="https://gist.github.com/erlendaakre/12eb90eef84a3ab81f7b531e516c9594">Dwm default keys cheat sheet gist</a> and created an alias in .zshrc to quickly display the cheat sheet in the terminal.</li>
 				<li>I set up <a href="https://github.com/sharkdp/bat">bat</a> to colorize several things like man pages.</li>
@@ -150,11 +149,33 @@
 
 			<p>So, after farting around some more with dwm and dmenu, getting completely frustrated trying to remember which keys to press to do simple things like close windows and navigate the tiling window manager, I did a little research and settled on switching to <a href="https://hypr.land/">Hyprland</a>. That may bring an eye roll or two, but I wanted to try out something that used <a href="https://wayland.freedesktop.org">Wayland</a> and something that would be easier for me to configure and use. Hyprland fit the bill nicely.</p>
 
-			<p>Along the way, I set up my shell environment with many of the recommendations made by Josean, installed a few apps like Visual Studio Code and Firefox, and changed a couple of Hyprland keybindings to something more familiar (e.g. I made the launcher open with <kbd>alt-space</kbd> since I&apos;m so used to <kbd>cmd-space</kbd> for Spotlight on macOS). I even managed to compile a handful of apps for amateur radio: <a href="https://wsjt.sourceforge.io/">wsjt-x</a>, <a href="https://www.w1hkj.org">fldigi</a>, and <a href="https://www.sdrpp.org/">SDR++</a>. I&apos;ve also been playing around with some other terminal emulators like <a href="https://sw.kovidgoyal.net/kitty/">kitty</a> and <a href=https://ghostty.org">ghostty</a>.</p>
+			<p>Along the way, I set up my shell environment with many of the recommendations made by Josean, installed a few apps like Visual Studio Code and Firefox, and changed a couple of Hyprland keybindings to something more familiar (e.g. I made the launcher open with <kbd>alt-space</kbd> since I&apos;m so used to <kbd>cmd-space</kbd> for Spotlight on macOS). I even managed to compile a handful of apps for amateur radio: <a href="https://wsjt.sourceforge.io/">wsjt-x</a>, <a href="https://www.w1hkj.org">fldigi</a>, and <a href="https://www.sdrpp.org/">SDR++</a>. I&apos;ve also been playing around with some other terminal emulators like <a href="https://sw.kovidgoyal.net/kitty/">kitty</a> and <a href="https://ghostty.org">ghostty</a>.</p>
 
 			<p>Anyway, now I&apos;m in business. I have a Linux machine I can actually use for something... exciting times!</p>
 
-			<p>More to come...</p>
+			<h3>An AI Adventure</h3>
+
+			<p>I recently received an <a href="https://www.rtl-sdr.com/buy-rtl-sdr-dvb-t-dongles/">RTL-SDR v4</a> and wanted to give it a spin. Of course, there's always one little thing to address before playing&mdash;Xorg was still trying to start after a TTY login, and I wasn't sure why. Even though I'd decided to switch to Hyprland, I still had this annoying issue where the machine would start Xorg and dwm, so I'd have to exit and manually launch Hyprland. It was time to address this.</p>
+
+			<p>This should be simple, right? Edit <code>~/.xinitrc</code> and comment out <code>eval dmw</code>, right? Nope. That prevented dwm from starting, of course, but Xorg would still try to run and then will error and kill itself. An improvement, but annoying. I poked around in a few config files and <i>knew</i> either <code>xinit</code> or <code>startx</code> were getting called somewhere, but I couldn't figure out where. I didn't want to uninstall Xorg, but since I couldn't figure out how to disable it, I did the unthinkable... I fired up my local <a href="https://openclaw.ai">OpenClaw</a> agent and asked it for some help.</p>
+
+			<p>Even though this whole chronicle is about computing, I'm actually kind of a luddite. AI is not something I have a lot of interest in, and the OpenClaw agent I set up was more of a curiosity, but I decided to see if it would do something useful. The agent is running on my Mac, so it couldn't do anything for me. It could only advise.</p>
+
+			<p>As tempting as it is to post the entire transcript here just to see how crazy it went, but I'll just say that I created a <code>~/.xinitrc</code> that just immediately exits (which didn't work) and eventually found myself reading through <code>/usr/bin/startx</code>, which gave me a clue. It was calling <code>xinit</code>, which means something was calling <code>startx</code>. I went through everything the AI suggested, which took me in a giant circle right back to my home directory: it turns out <code>~/.zshenv</code> had a three line shell script that would call <code>startx</code> after logging into TTY. In retrospect, I remember writing this. I just wish I'd remembered sooner.</p>
+
+			<p>Fortunately, a couple of quick changes, and I had Hyprland launching on login and the Xorg problem was fixed.<p>
+
+			<h3>The Sound Problem</h3>
+
+			<p>Finally! I plug in the RTL-SDR, fire up SDR++, connect to my dongle, and I'm tuning in a local FM station. That's when I remembered one small issue I'd chosen to ignore at this point: I never did get sound working. It turns out sounds output is pretty useful for operating a software-defined radio.</p>
+
+			<p>Admittedly, I didn't take a lot of notes getting this fixed. It involved updating <a href="https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture">alsa</a>, installing <a href="https://wiki.archlinux.org/title/PulseAudio">PulseAudio</a> and <a href="https://wiki.archlinux.org/title/PipeWire">PipeWire</a>  (I'm still not sure whether both are necessary), and then a lot of farting around to figure out how to get the system to use the correct audio device.</p>
+
+			<p>My machine has two audio outputs: one apparently on the graphics card, and one on the motherboard. It <i>seemed</i> like the system was trying to use the graphics card output as the default, which isn't what I wanted, but I couldn't figure out how to point it to the correct one. After a lot of trial and error, eventually one of my attempts to run <kbd>speaker-check</kbd> finally worked! I'm still not sure what I did, unfortunately. Once I knew I could get something going, though, I knew I could get things working properly.</p>
+
+			<p>Once I figured out I needed PulseAudio running as a daemon, I was able to control the sound through the UI. I launched SDR++ with confidence and when I tuned to a local FM station, I heard sound. Choppy sound.</p>
+
+			<p>A little Googling brought me to a forum thread from 2020 talking about <a href="https://github.com/thestk/rtaudio">rtaudio</a> needing to be rebuilt without alsa support (which doesn't make sense to me), so I cloned it, removed the currently installed version with <code>yay</code> and then built rtaudio. Viol&agrave;!</p>
 
 		</div>
 		<div id="footer">
