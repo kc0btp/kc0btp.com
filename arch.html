@@ -30,8 +30,6 @@
 
 			<p>Anyway, after I got over the googly-eyed wonder of Omarchy, I realized I didn&apos;t want another plug-and-play solution that I&apos;d spend an afternoon setting up and never use again. I wanted to really learn. That&apos;s when I decided to go with Arch.</p>
 
-			<p>Below is a summary of the steps I took to get it installed on my particular system. There was a lot of trial and error, but the process was surprisingly smooth. I&apos;m still chipping away at it, so while I have a functional system, I&apos;m still figuring out a good workflow and getting various tools installed to improve the UX.</p>
-
 			<h2>Setup</h2>
 
 			<p>I started with the Arch Installation Guide, which is generally the best resource to get through the installation.</p>
@@ -151,7 +149,7 @@
 
 			<p>Along the way, I set up my shell environment with many of the recommendations made by Josean, installed a few apps like Visual Studio Code and Firefox, and changed a couple of Hyprland keybindings to something more familiar (e.g. I made the launcher open with <kbd>alt-space</kbd> since I&apos;m so used to <kbd>cmd-space</kbd> for Spotlight on macOS). I even managed to compile a handful of apps for amateur radio: <a href="https://wsjt.sourceforge.io/">wsjt-x</a>, <a href="https://www.w1hkj.org">fldigi</a>, and <a href="https://www.sdrpp.org/">SDR++</a>. I&apos;ve also been playing around with some other terminal emulators like <a href="https://sw.kovidgoyal.net/kitty/">kitty</a> and <a href="https://ghostty.org">ghostty</a>.</p>
 
-			<p>Anyway, now I&apos;m in business. I have a Linux machine I can actually use for something... exciting times!</p>
+			<p>Anyway, now I&apos;m in business. I have a Linux machine I can actually use for something&hellips;exciting times!</p>
 
 			<h3>An AI Adventure</h3>
 
@@ -165,16 +163,29 @@
 
 			<p>Fortunately, a couple of quick changes, and I had Hyprland launching on login and the Xorg problem was fixed.<p>
 
-			<h3>The Sound Problem</h3>
+			<h3>A Sound Problem</h3>
 
-			<p>Finally! I plug in the RTL-SDR, fire up SDR++, connect to my dongle, and I'm tuning in a local FM station. That's when I remembered one small issue I'd chosen to ignore at this point: I never did get sound working. It turns out sounds output is pretty useful for operating a software-defined radio.</p>
+			<p>Finally! I plug in the RTL-SDR, fire up SDR++, connect to my dongle, and I'm tuning in a local FM station. That's when I remembered one small issue I'd chosen to ignore at this point: I never did get sound working. It turns out sound output is pretty useful for operating a software-defined radio.</p>
 
 			<p>Admittedly, I didn't take a lot of notes getting this fixed. It involved updating <a href="https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture">alsa</a>, installing <a href="https://wiki.archlinux.org/title/PulseAudio">PulseAudio</a> and <a href="https://wiki.archlinux.org/title/PipeWire">PipeWire</a>  (I'm still not sure whether both are necessary), and then a lot of farting around to figure out how to get the system to use the correct audio device.</p>
 
 			<p>My machine has two audio outputs: one apparently on the graphics card, and one on the motherboard. It <i>seemed</i> like the system was trying to use the graphics card output as the default, which isn't what I wanted, but I couldn't figure out how to point it to the correct one. After a lot of trial and error, eventually one of my attempts to run <kbd>speaker-check</kbd> finally worked! I'm still not sure what I did, unfortunately. Once I knew I could get something going, though, I knew I could get things working properly.</p>
 
-			<p>Once I figured out I needed PulseAudio running as a daemon, I was able to control the sound through the UI. I launched SDR++ with confidence and when I tuned to a local FM station, I heard sound. Choppy sound. A little Googling brought me to a forum thread from 2020 talking about <a href="https://github.com/thestk/rtaudio">rtaudio</a> needing to be rebuilt without alsa support (which doesn't make sense to me), so I cloned it, removed the currently installed version with <code>yay</code> and then built rtaudio. Viol&agrave;!</p>
+			<p>After I figured out I needed PulseAudio running as a daemon, I was able to control the sound through the UI. I launched SDR++ with confidence and when I tuned to a local FM station, I heard sound. Choppy sound. A little Googling brought me to a forum thread from 2020 talking about <a href="https://github.com/thestk/rtaudio">rtaudio</a> needing to be rebuilt without alsa support (which doesn't make sense to me), so I cloned it, removed the currently installed version with <code>yay</code> and then built rtaudio. Viol&agrave;!</p>
 
+			<h3>Not So Hypr</h3>
+
+			<p>Unfortunately, the next time I went to use the machine, it wouldn&apos;t start Hyprland&hellip;or at least, I didn&apos;t think it would. It appeared to be a graphics driver issue at the time, but I couldn&apos;t seem to resolve it. Frustrated, I left it alone for a while.</p>
+
+			<p>When I got back in the mood, I decided to try updating Arch and see if the driver issue magically fixed itself. I immediately ran into problems with package conflicts that I couldn&apos;t resolve. At some point, probably while I was attempting to fix this the first time around, I had installed both the AUR and git versions of several Hyprland dependencies. I had to remove the conflicting packages first, then managed to get things to update.</p>
+
+			<p>Along the way, I found that <code>seatd</code> wasn&apos;t running, which was identified in the hyprland.log as an aquamarine error. I gotta be honest here&emdash;I was flying by the seat of my pants and ended up working with <a href="httpsL//claude.ai">Claude</a> to work out the details. Fortunately, I just needed to enable the <code>seatd</code> service, and I was in business.
+
+			<h3>Omarchy</h3>
+
+			<p>Right around the time I got Hyprland running again, I got my hands on an old machine and decided to install <a href="https://omarchy.org">Omarchy</a> on it to see how well it would run. It was a simple install, and things just worked. I was honestly pretty surprised, especially because the window manager was pretty intuitive for me to use. Now, I know there are a lot of opinions out there about this opinionated Linux distro (many of the opinions are that it&apos;s not even a distro, but a rice of Arch), but I felt comfortable with it. Sure, there&apos;s some preinstalled cruft, like Basecamp and Hey, but it doesn&apos;t bother me, and it&apos;s completely removable. Maybe my long time use of Windows and macOS have lowered my tolerance threshold for such things.</p>
+
+			<p>So, after five seconds of thinking about it, I swallowed my sunk cost fallacy and installed Omarchy over the top of my from-the-ground-up Arch install I&apos;ve been poking at throughout the year. Look, I&apos;m not a software engineer or some kind of dev ops wizard&mdash;I&apos;m just a dude that likes to occasionally play around with computers. There is some irony that the pretty colors of Omarchy are what set me on this path in the first place and I chose to eschew it&apos;s siren song in favor of getting my hands a little dirty. However, I&apos;ve learned a lot about Linux along the way, and decided that I&apos;d rather start using it a little more and tinkering with it a little less.</p>
 		</div>
 		<div id="footer">
 			Copyright &copy;2026, kc0btp.com
